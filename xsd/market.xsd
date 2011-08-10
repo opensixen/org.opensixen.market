@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="marketList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="plugin"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="plugin">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="description">
+          <xs:sequence>
+            <xs:element ref="comments"/>
+            <xs:element ref="img"/>
+            <xs:element ref="license"/>
+            <xs:element ref="mantainer"/>
+            <xs:element ref="priceList"/>
+            <xs:element maxOccurs="unbounded" ref="installableFeature"/>
+          </xs:sequence>
+          <xs:attribute name="id" use="required" type="xs:string"/>
+          <xs:attribute name="name" use="required" type="xs:string"/>
+          <xs:attribute name="version" use="required" type="xs:string"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="comments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="comment"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="comment">
+    <xs:complexType mixed="true">
+      <xs:attribute name="date" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="img">
+    <xs:complexType>
+      <xs:attribute name="url" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="license">
+    <xs:complexType>
+      <xs:attribute name="url" use="optional" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mantainer">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="description">
+          <xs:attribute name="name" use="required"/>
+          <xs:attribute name="url" use="required" type="xs:anyURI"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="priceList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="price"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="price">
+    <xs:complexType>
+      <xs:attribute name="currency" use="required" type="currencyType"/>
+      <xs:attribute name="amount" use="required" type="xs:double"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="installableFeature">
+    <xs:complexType>
+      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="type" use="required" type="installationType"/>
+      <xs:attribute name="url" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="description">
+    <xs:sequence>
+      <xs:element ref="description"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="description" type="xs:string"/>
+
+  <xs:simpleType name="currencyType">
+  	<xs:restriction base="xs:string">
+  		<xs:enumeration value="USD"></xs:enumeration>
+  		<xs:enumeration value="EUR"></xs:enumeration>
+  	</xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="installationType">
+  	<xs:restriction base="xs:string">
+  		<xs:enumeration value="server"></xs:enumeration>
+  		<xs:enumeration value="client"></xs:enumeration>
+  		<xs:enumeration value="all"></xs:enumeration>
+  		<xs:enumeration value="lite"></xs:enumeration>
+  	</xs:restriction>
+  </xs:simpleType>
+</xs:schema>
